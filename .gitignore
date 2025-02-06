@@ -1,0 +1,9 @@
+# Workspace repos
+tree-sitter-dataflex/
+dataflex-lsp/
+zed-dataflex/
+vscode-dataflex/
+
+# Rust artifacts
+target/
+Cargo.lock

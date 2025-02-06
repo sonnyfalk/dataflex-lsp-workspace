@@ -1,0 +1,49 @@
+[config]
+default_to_workspace = false
+
+[tasks.generate-parser]
+cwd = "tree-sitter-dataflex"
+command = "tree-sitter"
+args = ["generate"]
+
+[tasks.sync-vscode-extension]
+condition = { files_exist = [
+    "${CARGO_MAKE_WORKING_DIRECTORY}/vscode-dataflex",
+] }
+command = "rsync"
+args = ["target/debug/dataflex-lsp", "vscode-dataflex/server/dataflex-lsp"]
+
+[tasks.sync-zed-extension-parser]
+command = "rsync"
+args = [
+    "-a",
+    "--exclude",
+    ".git",
+    "tree-sitter-dataflex/",
+    "zed-dataflex/grammars/dataflex",
+]
+
+[tasks.sync-zed-extension-highlights]
+command = "rsync"
+args = [
+    "tree-sitter-dataflex/queries/highlights.scm",
+    "zed-dataflex/languages/dataflex/highlights.scm",
+]
+
+[tasks.sync-zed-extension]
+condition = { files_exist = ["${CARGO_MAKE_WORKING_DIRECTORY}/zed-dataflex"] }
+run_task = { name = [
+    "sync-zed-extension-parser",
+    "sync-zed-extension-highlights",
+] }
+
+[tasks.build-all]
+dependencies = [
+    "generate-parser",
+    "build",
+    "sync-vscode-extension",
+    "sync-zed-extension",
+]
+
+[tasks.default]
+alias = "build-all"
