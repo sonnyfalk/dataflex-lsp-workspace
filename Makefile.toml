@@ -3,15 +3,33 @@ default_to_workspace = false
 
 [tasks.generate-parser]
 cwd = "tree-sitter-dataflex"
-command = "tree-sitter"
-args = ["generate"]
+script = "tree-sitter generate"
 
 [tasks.sync-vscode-extension]
 condition = { files_exist = [
     "${CARGO_MAKE_WORKING_DIRECTORY}/vscode-dataflex",
 ] }
-command = "rsync"
-args = ["target/debug/dataflex-lsp", "vscode-dataflex/server/dataflex-lsp"]
+run_task = { name = [
+    "sync-vscode-extension-server",
+] }
+
+[tasks.sync-vscode-extension-server.windows]
+script_runner = "@duckscript"
+script = '''
+    cp target/debug/dataflex-lsp.exe vscode-dataflex/server/dataflex-lsp.exe
+    cp target/debug/dataflex_lsp.pdb vscode-dataflex/server/dataflex_lsp.pdb
+'''
+
+[tasks.sync-vscode-extension-server.mac]
+script_runner = "@duckscript"
+script = "cp target/debug/dataflex-lsp vscode-dataflex/server/dataflex-lsp"
+
+[tasks.sync-zed-extension]
+condition = { files_exist = ["${CARGO_MAKE_WORKING_DIRECTORY}/zed-dataflex"] }
+run_task = { name = [
+    "sync-zed-extension-parser",
+    "sync-zed-extension-highlights",
+] }
 
 [tasks.sync-zed-extension-parser]
 command = "rsync"
@@ -29,13 +47,6 @@ args = [
     "tree-sitter-dataflex/queries/highlights.scm",
     "zed-dataflex/languages/dataflex/highlights.scm",
 ]
-
-[tasks.sync-zed-extension]
-condition = { files_exist = ["${CARGO_MAKE_WORKING_DIRECTORY}/zed-dataflex"] }
-run_task = { name = [
-    "sync-zed-extension-parser",
-    "sync-zed-extension-highlights",
-] }
 
 [tasks.build-all]
 dependencies = [
