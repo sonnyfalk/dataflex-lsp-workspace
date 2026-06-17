@@ -3,6 +3,7 @@ default_to_workspace = false
 
 [tasks.generate-parser]
 cwd = "tree-sitter-dataflex"
+condition = { files_modified = { input = ["grammar.js"], output = ["src/parser.c"] }}
 script = "tree-sitter generate"
 
 [tasks.sync-vscode-extension]
