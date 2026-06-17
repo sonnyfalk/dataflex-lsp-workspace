@@ -1,7 +1,12 @@
 # DataFlex-LSP-Workspace
 Convenience workspace for building DataFlex-LSP along with related editor extension projects, e.g. VSCode extension.
 
-## Building
+## Installing
+If you just want to install the DataFlex-LSP VSCode extension, you can download a pre-built binary VSCode extension.
+The latest pre-built binary release is [v0.8.1](https://github.com/sonnyfalk/dataflex-lsp/releases/tag/v0.8.1), scroll to the bottom of that page and download `vscode-dataflex-win32-x64-0.8.1.vsix`.
+In the VSCode Extensions tab, select `Install from VSIX`, and then install the downloaded .vsix file. Now you can open any DataFlex workspace folder, and get full syntax highlighting, code completion, goto definition, etc.
+
+## Building from Source
 #### 1. Clone required workspace member repos inside, i.e. `dataflex-lsp`, `tree-sitter-dataflex`, `vscode-dataflex`:
 ```
 $ cd dataflex-lsp-workspace
@@ -21,7 +26,7 @@ For the following structure:
 #### 2. Install cargo-make
 This uses [cargo-make](https://crates.io/crates/cargo-make) to build the workspace and copy files into the VSCode extension, so it can be tested in VSCode.
 
-Run `cargo install --force cargo-make` to install `cargo-make`.
+Run `cargo install cargo-make` to install `cargo-make`.
 
 #### 3. Build the workspace
 Run `cargo make` to build the workspace and copy the result into the VSCode extension.
