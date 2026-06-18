@@ -17,13 +17,13 @@ run_task = { name = [
 [tasks.sync-vscode-extension-server.windows]
 script_runner = "@duckscript"
 script = '''
-    cp target/debug/dataflex-lsp.exe vscode-dataflex/server/dataflex-lsp.exe
-    cp target/debug/dataflex_lsp.pdb vscode-dataflex/server/dataflex_lsp.pdb
+    cp ${TARGET_PATH}/dataflex-lsp.exe vscode-dataflex/server/dataflex-lsp.exe
+    cp ${TARGET_PATH}/dataflex_lsp.pdb vscode-dataflex/server/dataflex_lsp.pdb
 '''
 
 [tasks.sync-vscode-extension-server.mac]
 script_runner = "@duckscript"
-script = "cp target/debug/dataflex-lsp vscode-dataflex/server/dataflex-lsp"
+script = "cp ${TARGET_PATH}/dataflex-lsp vscode-dataflex/server/dataflex-lsp"
 
 [tasks.sync-zed-extension]
 condition = { files_exist = ["${CARGO_MAKE_WORKING_DIRECTORY}/zed-dataflex"] }
@@ -49,13 +49,51 @@ args = [
     "zed-dataflex/languages/dataflex/highlights.scm",
 ]
 
-[tasks.build-all]
-dependencies = [
+[tasks.compile-vscode-extension]
+cwd = "vscode-dataflex"
+condition = { files_modified = { input = ["src/*"], output = ["out/extension.js", "out/extension.map"] }}
+script = "npm run compile"
+
+[tasks.create-vsix]
+cwd = "vscode-dataflex"
+script = "vsce package --target win32-x64"
+
+[tasks.test-parser]
+cwd = "tree-sitter-dataflex"
+script = "tree-sitter test"
+
+[tasks.test-dataflex-lsp]
+cwd = "dataflex-lsp"
+command = "cargo"
+args = ["test"]
+
+[tasks.debug]
+env = { TARGET_PATH = "target/debug" }
+run_task = { name = [
     "generate-parser",
     "build",
     "sync-vscode-extension",
     "sync-zed-extension",
-]
+    "compile-vscode-extension",
+]}
+
+[tasks.release]
+env = { TARGET_PATH = "target/release" }
+run_task = { name = [
+    "generate-parser",
+    "build-release",
+    "sync-vscode-extension",
+    "sync-zed-extension",
+    "create-vsix",
+]}
+
+[tasks.test]
+clear = true
+run_task = { name = [
+    "generate-parser",
+    "test-parser",
+    "test-dataflex-lsp",
+]}
 
 [tasks.default]
-alias = "build-all"
+alias = "debug"

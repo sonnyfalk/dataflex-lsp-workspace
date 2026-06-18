@@ -29,7 +29,25 @@ This uses [cargo-make](https://crates.io/crates/cargo-make) to build the workspa
 Run `cargo install cargo-make` to install `cargo-make`.
 
 #### 3. Build the workspace
-Run `cargo make` to build the workspace and copy the result into the VSCode extension.
+Run `cargo make` to build the workspace for development and debugging, it will also copy the result into the VSCode extension folder so it's ready for debugging.
 
 #### 4. Test in VSCode
-Debug the extension in VSCode by opening `./dataflex-lsp-workspace/vscode-dataflex` and selecting `Run` -> `Start Debugging`. 
+Debug the extension in VSCode by opening `./dataflex-lsp-workspace/vscode-dataflex` and open `src/extension.ts`, then select `Run` -> `Start Debugging`. 
+
+#### 5. Optionally install tree-sitter-cli
+If you plan to modify `./tree-sitter-dataflex/grammar.js`, you need to install [tree-sitter CLI](https://tree-sitter.github.io/tree-sitter/creating-parsers/1-getting-started.html).
+Note that this is only needed if you modify `grammar.js` since `tree-sitter-dataflex` repo already includes the generated output file `parser.c`.
+You can install tree-sitter-cli via `cargo install tree-sitter-cli`, or `npm install -g tree-sitter-cli`.
+To use the tree-sitter CLI, you also need node.js.
+
+#### 6. Optionally install vsce
+If you want to package a VSCode extension binary `.vsix` file for distribution, you need to install [vsce](https://code.visualstudio.com/api/working-with-extensions/publishing-extension).
+You can install `vsce` via `npm install -g @vscode/vsce`.
+
+#### 7. Optionally build and run all the tests
+To build and run all the tests, run `cargo make test`.
+
+#### 8. Optionally build for release and package the VSCode extension binary
+To build for release and package the VSCode extension `.vsix` binary, run `cargo make release`.
+
+
