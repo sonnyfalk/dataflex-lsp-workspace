@@ -54,9 +54,13 @@ cwd = "vscode-dataflex"
 condition = { files_modified = { input = ["src/*"], output = ["out/extension.js", "out/extension.map"] }}
 script = "npm run compile"
 
-[tasks.create-vsix]
+[tasks.create-vsix.windows]
 cwd = "vscode-dataflex"
 script = "vsce package --target win32-x64"
+
+[tasks.create-vsix.mac]
+cwd = "vscode-dataflex"
+script = "vsce package --target darwin-arm64"
 
 [tasks.test-parser]
 cwd = "tree-sitter-dataflex"
