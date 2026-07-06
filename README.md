@@ -3,7 +3,7 @@ Convenience workspace for building DataFlex-LSP along with related editor extens
 
 ## Installing
 If you just want to install the DataFlex-LSP VSCode extension, you can download a pre-built binary VSCode extension.
-The latest pre-built binary release is [v0.8.2](https://github.com/sonnyfalk/dataflex-lsp/releases/tag/v0.8.2), scroll to the bottom of that page and download `vscode-dataflex-win32-x64-0.8.2.vsix`.
+The latest pre-built binary release is [v0.8.3](https://github.com/sonnyfalk/dataflex-lsp/releases/tag/v0.8.3), scroll to the bottom of that page and download `vscode-dataflex-win32-x64-0.8.3.vsix` for Windows, or `vscode-dataflex-darwin-arm64-0.8.3.vsix` for macOS.
 In the VSCode Extensions tab, select `Install from VSIX`, and then install the downloaded .vsix file. Now you can open any DataFlex workspace folder, and get full syntax highlighting, code completion, goto definition, etc.
 
 ## Building from Source
