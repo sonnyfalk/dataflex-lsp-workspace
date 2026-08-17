@@ -3,7 +3,7 @@ Convenience workspace for building DataFlex-LSP along with related editor extens
 
 ## Installing
 If you just want to install the DataFlex-LSP VSCode extension, you can download a pre-built binary VSCode extension.
-The latest pre-built binary release is [v0.8.6](https://github.com/sonnyfalk/dataflex-lsp/releases), download `vscode-dataflex-win32-x64-0.8.6.vsix` for Windows, or `vscode-dataflex-darwin-arm64-0.8.6.vsix` for macOS.
+The latest pre-built binary release is [v0.8.7](https://github.com/sonnyfalk/dataflex-lsp/releases), download `vscode-dataflex-win32-x64-0.8.7.vsix` for Windows, or `vscode-dataflex-darwin-arm64-0.8.7.vsix` for macOS.
 In the VSCode Extensions tab, select `Install from VSIX`, and then install the downloaded .vsix file. Now you can open any DataFlex workspace folder, and get full syntax highlighting, code completion, goto definition, etc.
 
 ## Building from Source
@@ -40,12 +40,16 @@ Note that this is only needed if you modify `grammar.js` since `tree-sitter-data
 You can install tree-sitter-cli via `cargo install tree-sitter-cli`, or `npm install -g tree-sitter-cli`.
 To use the tree-sitter CLI, you also need node.js.
 
-#### 6. Optionally install vsce
+#### 6. Optionally install typescript compiler
+If you plan to modify `./vscode-dataflex/src/extension.ts`, you need to install a typescript compiler.
+You can install `tsc` via `npm install -g typescript`.
+
+#### 7. Optionally install vsce
 If you want to package a VSCode extension binary `.vsix` file for distribution, you need to install [vsce](https://code.visualstudio.com/api/working-with-extensions/publishing-extension).
 You can install `vsce` via `npm install -g @vscode/vsce`.
 
-#### 7. Optionally build and run all the tests
+#### 8. Optionally build and run all the tests
 To build and run all the tests, run `cargo make test`.
 
-#### 8. Optionally build for release and package the VSCode extension binary
+#### 9. Optionally build for release and package the VSCode extension binary
 To build for release and package the VSCode extension `.vsix` binary, run `cargo make release`.

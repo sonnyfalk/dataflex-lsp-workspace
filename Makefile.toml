@@ -51,7 +51,7 @@ args = [
 
 [tasks.compile-vscode-extension]
 cwd = "vscode-dataflex"
-condition = { files_modified = { input = ["src/*"], output = ["out/extension.js", "out/extension.map"] }}
+condition = { files_modified = { input = ["src/*"], output = ["out/extension.js", "out/extension.js.map"] }}
 script = "npm run compile"
 
 [tasks.create-vsix.windows]
